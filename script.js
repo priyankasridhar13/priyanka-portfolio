@@ -78,6 +78,11 @@ window.addEventListener('scroll', () => {
     });
 });
 
+// Initialize EmailJS
+(function() {
+    emailjs.init("kANtZWZpbdYWEq7XX");
+})();
+
 // Contact form handling
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
@@ -104,19 +109,33 @@ if (contactForm) {
             return;
         }
         
-        // Simulate form submission
+        // Update button state
         const submitButton = this.querySelector('button[type="submit"]');
         const originalText = submitButton.textContent;
         submitButton.textContent = 'Sending...';
         submitButton.disabled = true;
         
-        // Simulate API call
-        setTimeout(() => {
-            alert('Thank you for your message! I will get back to you soon.');
-            this.reset();
-            submitButton.textContent = originalText;
-            submitButton.disabled = false;
-        }, 2000);
+        // Prepare email template parameters
+        const templateParams = {
+            from_name: name,
+            from_email: email,
+            subject: subject,
+            message: message,
+            to_name: 'Priyanka'
+        };
+        
+        // Send email using EmailJS
+        emailjs.send('service_n4275ej', 'template_55j7lwh', templateParams)
+            .then(function(response) {
+                alert('Thank you for your message! I will get back to you soon.');
+                contactForm.reset();
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+            }, function(error) {
+                alert('Sorry, there was an error sending your message. Please try again or email me directly at priyankasridhar13@gmail.com');
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+            });
     });
 }
 
