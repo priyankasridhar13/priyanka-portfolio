@@ -461,21 +461,6 @@ document.head.appendChild(particleStyle);
 // Create particles periodically
 setInterval(createParticle, 2000);
 
-// Add typing effect to hero title
-function typeWriter(element, text, speed = 100) {
-    let i = 0;
-    element.innerHTML = '';
-    
-    function type() {
-        if (i < text.length) {
-            element.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
-        }
-    }
-    type();
-}
-
 // Initialize typing effect when page loads
 document.addEventListener('DOMContentLoaded', function() {
     const heroTitle = document.querySelector('.hero-title');
