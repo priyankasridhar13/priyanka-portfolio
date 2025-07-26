@@ -316,157 +316,53 @@ revealSections.forEach(section => {
     sectionRevealObserver.observe(section);
 });
 
-// Enhanced parallax scrolling effects
+// Subtle parallax scrolling effects
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
-    const windowHeight = window.innerHeight;
     
-    // Hero section parallax with enhanced depth
+    // Very subtle hero section parallax
     const hero = document.querySelector('.hero');
     if (hero) {
-        const heroHeight = hero.offsetHeight;
-        const heroProgress = Math.min(scrolled / heroHeight, 1);
-        
-        hero.style.transform = `translateY(${scrolled * 0.4}px)`;
-        
-        // Dynamic opacity based on scroll progress
-        const opacity = Math.max(0.4, 1 - (heroProgress * 0.6));
-        hero.style.opacity = opacity;
+        hero.style.transform = `translateY(${scrolled * 0.1}px)`;
     }
     
-    // Enhanced parallax background effect
-    const parallaxBg = document.querySelector('.parallax-bg');
-    if (parallaxBg) {
-        parallaxBg.style.transform = `translateY(${scrolled * 0.2}px) scale(${1 + scrolled * 0.0001})`;
-    }
-    
-    // Multi-layered parallax shapes with different speeds
-    const parallaxShapes = document.querySelectorAll('.parallax-shape');
-    parallaxShapes.forEach((shape, index) => {
-        const speed = 0.15 + (index * 0.08);
-        const rotationSpeed = 0.05 + (index * 0.02);
-        const scale = 1 + (scrolled * 0.00005);
-        
-        shape.style.transform = `
-            translateY(${scrolled * speed}px) 
-            rotate(${scrolled * rotationSpeed}deg) 
-            scale(${scale})
-        `;
-    });
-    
-    // Graduation photo parallax effect
-    const graduationPhoto = document.querySelector('.graduation-highlight');
-    if (graduationPhoto) {
-        const rect = graduationPhoto.getBoundingClientRect();
-        if (rect.top < windowHeight && rect.bottom > 0) {
-            const yPos = -(rect.top * 0.3);
-            graduationPhoto.style.transform = `translateY(${yPos}px) rotate(${scrolled * 0.01}deg)`;
-        }
-    }
-    
-    // Enhanced section parallax effects with depth
-    const sections = document.querySelectorAll('.about, .projects, .skills, .contact');
-    sections.forEach((section, index) => {
-        const rect = section.getBoundingClientRect();
-        const speed = 0.08 + (index * 0.02);
-        
-        if (rect.top < windowHeight && rect.bottom > 0) {
-            const yPos = -(rect.top * speed);
-            const scale = 1 + (Math.abs(rect.top) * 0.0001);
-            section.style.transform = `translateY(${yPos}px) scale(${scale})`;
-        }
-    });
-    
-    // Profile card enhanced parallax
+    // Subtle profile card movement
     const profileCard = document.querySelector('.profile-card');
     if (profileCard) {
         const rect = profileCard.getBoundingClientRect();
-        if (rect.top < windowHeight && rect.bottom > 0) {
-            const yPos = -(rect.top * 0.25);
-            const rotation = (rect.top * 0.02);
-            profileCard.style.transform = `translateY(${yPos}px) rotate(${rotation}deg)`;
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+            const yPos = -(rect.top * 0.05);
+            profileCard.style.transform = `translateY(${yPos}px)`;
         }
     }
-    
-    // Timeline parallax effect
-    const timelineItems = document.querySelectorAll('.timeline-content');
-    timelineItems.forEach((item, index) => {
-        const rect = item.getBoundingClientRect();
-        if (rect.top < windowHeight && rect.bottom > 0) {
-            const yPos = -(rect.top * (0.1 + index * 0.02));
-            const opacity = Math.max(0.3, 1 - (Math.abs(rect.top) * 0.001));
-            item.style.transform = `translateY(${yPos}px)`;
-            item.style.opacity = opacity;
-        }
-    });
-    
-    // Project cards staggered parallax
-    const projectCards = document.querySelectorAll('.project-card');
-    projectCards.forEach((card, index) => {
-        const rect = card.getBoundingClientRect();
-        if (rect.top < windowHeight && rect.bottom > 0) {
-            const yPos = -(rect.top * (0.05 + index * 0.01));
-            const rotation = (rect.top * 0.005);
-            card.style.transform = `translateY(${yPos}px) rotate(${rotation}deg)`;
-        }
-    });
 });
 
-// Add floating animation to profile card
+// Subtle floating animation for profile card
 const profileCard = document.querySelector('.profile-card');
 if (profileCard) {
-    profileCard.style.animation = 'float 6s ease-in-out infinite';
+    profileCard.style.animation = 'gentleFloat 8s ease-in-out infinite';
 }
 
-// Add CSS for floating animation
+// Add CSS for gentle floating animation
 const floatStyle = document.createElement('style');
 floatStyle.textContent = `
-    @keyframes float {
+    @keyframes gentleFloat {
         0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
+        50% { transform: translateY(-5px); }
     }
 `;
 document.head.appendChild(floatStyle);
-
-// Add particle effect to hero section
-function createParticle() {
-    const particle = document.createElement('div');
-    particle.style.position = 'absolute';
-    particle.style.width = '2px';
-    particle.style.height = '2px';
-    particle.style.background = '#f59e0b';
-    particle.style.borderRadius = '50%';
-    particle.style.pointerEvents = 'none';
-    particle.style.left = Math.random() * 100 + '%';
-    particle.style.top = '100%';
-    particle.style.animation = 'particleFloat 8s linear infinite';
-    
-    document.querySelector('.hero').appendChild(particle);
-    
-    setTimeout(() => {
-        particle.remove();
-    }, 8000);
-}
-
-// Add particle animation CSS
-const particleStyle = document.createElement('style');
-particleStyle.textContent = `
-    @keyframes particleFloat {
-        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-        100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-    }
-`;
-document.head.appendChild(particleStyle);
-
-// Create particles periodically
-setInterval(createParticle, 2000);
 
 // Initialize typing effect when page loads
 document.addEventListener('DOMContentLoaded', function() {
     const heroTitle = document.querySelector('.hero-title');
     if (heroTitle) {
         const originalText = heroTitle.textContent;
-        typeWriter(heroTitle, originalText, 80);
+        // Only run typing animation if text is not already animated
+        if (!heroTitle.classList.contains('typing-animated')) {
+            heroTitle.classList.add('typing-animated');
+            typeWriter(heroTitle, originalText, 100);
+        }
     }
 });
 
@@ -493,14 +389,15 @@ document.querySelectorAll('.timeline-content, .project-card, .skill-item, .educa
     scrollObserver.observe(el);
 });
 
-// Add hover sound effect simulation (visual feedback)
+// Subtle hover effects
 document.querySelectorAll('.btn, .skill-item, .project-card, .timeline-content').forEach(element => {
     element.addEventListener('mouseenter', function() {
-        this.style.transform = this.style.transform + ' scale(1.02)';
+        this.style.transform = 'scale(1.01)';
+        this.style.transition = 'transform 0.2s ease';
     });
     
     element.addEventListener('mouseleave', function() {
-        this.style.transform = this.style.transform.replace(' scale(1.02)', '');
+        this.style.transform = 'scale(1)';
     });
 });
 
