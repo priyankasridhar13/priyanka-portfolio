@@ -157,32 +157,7 @@ if (contactForm) {
     });
 }
 
-// Animate elements on scroll
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, observerOptions);
-
-// Observe elements for animation
-document.addEventListener('DOMContentLoaded', () => {
-    const animateElements = document.querySelectorAll('.timeline-content, .project-card, .skill-category, .stat');
-    
-    animateElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-    });
-});
+// Removed scroll animations for static layout
 
 // Typing animation for hero title
 function typeWriter(element, text, speed = 100) {
@@ -199,235 +174,28 @@ function typeWriter(element, text, speed = 100) {
     type();
 }
 
-// Initialize typing animation when page loads
-document.addEventListener('DOMContentLoaded', () => {
-    const heroTitle = document.querySelector('.hero-title');
-    if (heroTitle) {
-        const originalText = heroTitle.textContent;
-        setTimeout(() => {
-            typeWriter(heroTitle, originalText, 50);
-        }, 500);
-    }
-});
+// Removed typing animation initialization
 
-// Parallax effect for hero section
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero');
-    if (hero) {
-        const rate = scrolled * -0.5;
-        hero.style.transform = `translateY(${rate}px)`;
-    }
-});
+// Removed hero parallax effect
 
-// Add loading animation
-window.addEventListener('load', () => {
-    document.body.style.opacity = '0';
-    document.body.style.transition = 'opacity 0.5s ease';
-    
-    setTimeout(() => {
-        document.body.style.opacity = '1';
-    }, 100);
-});
+// Removed loading animation for immediate display
 
-// Skills animation on hover
-document.querySelectorAll('.skill-item').forEach(skill => {
-    skill.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-5px) scale(1.05)';
-    });
-    
-    skill.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0) scale(1)';
-    });
-});
+// Removed skills hover animations
 
-// Project cards tilt effect
-document.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('mousemove', function(e) {
-        const rect = this.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const rotateX = (y - centerY) / 10;
-        const rotateY = (centerX - x) / 10;
-        
-        this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
-    });
-    
-    card.addEventListener('mouseleave', function() {
-        this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
-    });
-});
+// Removed project card tilt effects
 
-// Smooth reveal animation for sections
-const revealSections = document.querySelectorAll('section');
-const revealSection = (entries, observer) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('section--hidden');
-        }
-    });
-};
+// Removed section reveal animations
 
-const sectionObserver = new IntersectionObserver(revealSection, {
-    root: null,
-    threshold: 0.15,
-});
+// Removed section reveal CSS and observers
 
-revealSections.forEach(section => {
-    sectionObserver.observe(section);
-    section.classList.add('section--hidden');
-});
+// Removed all parallax effects for clean, static layout
 
-// Add CSS for section reveal animation
-const sectionStyle = document.createElement('style');
-sectionStyle.textContent = `
-    .section--hidden {
-        opacity: 0;
-        transform: translateY(8rem);
-        transition: all 1s;
-    }
-    
-    .section--hidden.active {
-        opacity: 1;
-        transform: translateY(0);
-    }
-`;
-document.head.appendChild(sectionStyle);
+// Removed floating animation for static layout
 
-// Trigger reveal animation
-const revealSectionOnScroll = (entries, observer) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-        }
-    });
-};
+// Removed typing animation for static text display
 
-const sectionRevealObserver = new IntersectionObserver(revealSectionOnScroll, {
-    root: null,
-    threshold: 0.15,
-});
+// Removed additional scroll animations
 
-revealSections.forEach(section => {
-    sectionRevealObserver.observe(section);
-});
+// Removed hover effects for static layout
 
-// Subtle parallax scrolling effects
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    
-    // Very subtle hero section parallax
-    const hero = document.querySelector('.hero');
-    if (hero) {
-        hero.style.transform = `translateY(${scrolled * 0.1}px)`;
-    }
-    
-    // Subtle profile card movement
-    const profileCard = document.querySelector('.profile-card');
-    if (profileCard) {
-        const rect = profileCard.getBoundingClientRect();
-        if (rect.top < window.innerHeight && rect.bottom > 0) {
-            const yPos = -(rect.top * 0.05);
-            profileCard.style.transform = `translateY(${yPos}px)`;
-        }
-    }
-});
-
-// Subtle floating animation for profile card
-const profileCard = document.querySelector('.profile-card');
-if (profileCard) {
-    profileCard.style.animation = 'gentleFloat 8s ease-in-out infinite';
-}
-
-// Add CSS for gentle floating animation
-const floatStyle = document.createElement('style');
-floatStyle.textContent = `
-    @keyframes gentleFloat {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-5px); }
-    }
-`;
-document.head.appendChild(floatStyle);
-
-// Initialize typing effect when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    const heroTitle = document.querySelector('.hero-title');
-    if (heroTitle) {
-        const originalText = heroTitle.textContent;
-        // Only run typing animation if text is not already animated
-        if (!heroTitle.classList.contains('typing-animated')) {
-            heroTitle.classList.add('typing-animated');
-            typeWriter(heroTitle, originalText, 100);
-        }
-    }
-});
-
-// Add scroll-triggered animations
-const scrollObserverOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const scrollObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, scrollObserverOptions);
-
-// Observe elements for scroll animations
-document.querySelectorAll('.timeline-content, .project-card, .skill-item, .education-item').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    scrollObserver.observe(el);
-});
-
-// Subtle hover effects
-document.querySelectorAll('.btn, .skill-item, .project-card, .timeline-content').forEach(element => {
-    element.addEventListener('mouseenter', function() {
-        this.style.transform = 'scale(1.01)';
-        this.style.transition = 'transform 0.2s ease';
-    });
-    
-    element.addEventListener('mouseleave', function() {
-        this.style.transform = 'scale(1)';
-    });
-});
-
-// Add smooth reveal for stats
-const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const stat = entry.target.querySelector('h3');
-            const finalValue = stat.textContent;
-            const isNumber = !isNaN(parseFloat(finalValue));
-            
-            if (isNumber) {
-                const targetValue = parseFloat(finalValue);
-                let currentValue = 0;
-                const increment = targetValue / 50;
-                
-                const counter = setInterval(() => {
-                    currentValue += increment;
-                    if (currentValue >= targetValue) {
-                        stat.textContent = finalValue;
-                        clearInterval(counter);
-                    } else {
-                        stat.textContent = currentValue.toFixed(1);
-                    }
-                }, 50);
-            }
-        }
-    });
-}, { threshold: 0.5 });
-
-document.querySelectorAll('.stat').forEach(stat => {
-    statsObserver.observe(stat);
-});
+// Removed stats counter animations
