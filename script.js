@@ -84,62 +84,21 @@ window.addEventListener('scroll', () => {
     console.log('EmailJS initialized');
 })();
 
-// Contact form handling
+// Contact form handling with Formspree
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get form data
-        const formData = new FormData(this);
-        const name = formData.get('name');
-        const email = formData.get('email');
-        const subject = formData.get('subject');
-        const message = formData.get('message');
-        
-        // Simple validation
-        if (!name || !email || !subject || !message) {
-            alert('Please fill in all fields');
-            return;
-        }
-        
-        // Email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            alert('Please enter a valid email address');
-            return;
-        }
-        
-        // Update button state
+        // Let the form submit naturally to Formspree
         const submitButton = this.querySelector('button[type="submit"]');
         const originalText = submitButton.textContent;
         submitButton.textContent = 'Sending...';
         submitButton.disabled = true;
         
-        // Prepare email template parameters
-        const templateParams = {
-            from_name: name,
-            from_email: email,
-            subject: subject,
-            message: message,
-            to_name: 'Priyanka'
-        };
-        
-        // Send email using EmailJS
-        console.log('Sending email with params:', templateParams);
-        emailjs.send('service_n4275ej', 'template_55j7lwh', templateParams)
-            .then(function(response) {
-                console.log('Email sent successfully:', response);
-                alert('Thank you for your message! I will get back to you soon.');
-                contactForm.reset();
-                submitButton.textContent = originalText;
-                submitButton.disabled = false;
-            }, function(error) {
-                console.error('Email send failed:', error);
-                alert('Sorry, there was an error sending your message. Error: ' + error.text + '. Please try again or email me directly at priyankasridhar13@gmail.com');
-                submitButton.textContent = originalText;
-                submitButton.disabled = false;
-            });
+        // Reset button after a delay
+        setTimeout(() => {
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+        }, 3000);
     });
 }
 
