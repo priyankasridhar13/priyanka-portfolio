@@ -81,6 +81,7 @@ window.addEventListener('scroll', () => {
 // Initialize EmailJS
 (function() {
     emailjs.init("kANtZWZpbdYWEq7XX");
+    console.log('EmailJS initialized');
 })();
 
 // Contact form handling
@@ -125,14 +126,17 @@ if (contactForm) {
         };
         
         // Send email using EmailJS
+        console.log('Sending email with params:', templateParams);
         emailjs.send('service_n4275ej', 'template_55j7lwh', templateParams)
             .then(function(response) {
+                console.log('Email sent successfully:', response);
                 alert('Thank you for your message! I will get back to you soon.');
                 contactForm.reset();
                 submitButton.textContent = originalText;
                 submitButton.disabled = false;
             }, function(error) {
-                alert('Sorry, there was an error sending your message. Please try again or email me directly at priyankasridhar13@gmail.com');
+                console.error('Email send failed:', error);
+                alert('Sorry, there was an error sending your message. Error: ' + error.text + '. Please try again or email me directly at priyankasridhar13@gmail.com');
                 submitButton.textContent = originalText;
                 submitButton.disabled = false;
             });
