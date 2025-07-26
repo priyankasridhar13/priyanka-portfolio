@@ -80,8 +80,13 @@ window.addEventListener('scroll', () => {
 
 // Initialize EmailJS
 (function() {
-    emailjs.init("kANtZWZpbdYWEq7XX");
-    console.log('EmailJS initialized');
+    // Check if EmailJS is loaded
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init("kANtZWZpbdYWEq7XX");
+        console.log('EmailJS initialized successfully');
+    } else {
+        console.error('EmailJS not loaded!');
+    }
 })();
 
 // Contact form handling
@@ -127,6 +132,15 @@ if (contactForm) {
         
         // Send email using EmailJS
         console.log('Sending email with params:', templateParams);
+        
+        // Check if EmailJS is available
+        if (typeof emailjs === 'undefined') {
+            alert('EmailJS not loaded. Please refresh the page and try again.');
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+            return;
+        }
+        
         emailjs.send('service_n4275ej', 'template_55j7lwh', templateParams)
             .then(function(response) {
                 console.log('Email sent successfully:', response);
