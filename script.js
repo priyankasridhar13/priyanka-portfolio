@@ -283,8 +283,8 @@ revealSections.forEach(section => {
 });
 
 // Add CSS for section reveal animation
-const style = document.createElement('style');
-style.textContent = `
+const sectionStyle = document.createElement('style');
+sectionStyle.textContent = `
     .section--hidden {
         opacity: 0;
         transform: translateY(8rem);
@@ -296,7 +296,7 @@ style.textContent = `
         transform: translateY(0);
     }
 `;
-document.head.appendChild(style);
+document.head.appendChild(sectionStyle);
 
 // Trigger reveal animation
 const revealSectionOnScroll = (entries, observer) => {
