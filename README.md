@@ -51,14 +51,44 @@ priyanka-portfolio/
 ├── index.html          # Main HTML file
 ├── styles.css          # CSS styles
 ├── script.js           # JavaScript functionality
+├── config.js           # API configuration (not in version control)
+├── .gitignore          # Git ignore file
+├── .github/workflows/  # GitHub Actions workflows
+│   └── deploy.yml      # Deployment workflow
 └── README.md           # Project documentation
 ```
+
+## 🔐 Environment Variables Setup
+
+This project uses EmailJS for the contact form functionality. To secure the API keys:
+
+### For Local Development:
+1. Create a `config.js` file in the root directory
+2. Add your EmailJS credentials:
+```javascript
+window.EMAILJS_CONFIG = {
+    USER_ID: 'your_emailjs_user_id',
+    SERVICE_ID: 'your_emailjs_service_id',
+    TEMPLATE_ID: 'your_emailjs_template_id'
+};
+```
+
+### For Production (GitHub Pages):
+1. Go to your GitHub repository
+2. Navigate to Settings → Secrets and variables → Actions
+3. Add the following repository secrets:
+   - `EMAILJS_USER_ID`: Your EmailJS User ID
+   - `EMAILJS_SERVICE_ID`: Your EmailJS Service ID
+   - `EMAILJS_TEMPLATE_ID`: Your EmailJS Template ID
+
+The GitHub Actions workflow will automatically replace the config file with these environment variables during deployment.
 
 ## 🚀 Getting Started
 
 1. Clone or download the project files
-2. Open `index.html` in a web browser
-3. The website will load with all functionality
+2. Set up environment variables (see above)
+3. Open `index.html` in a web browser
+4. The website will load with all functionality
 
 ## 📧 Contact Information
 

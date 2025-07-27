@@ -82,7 +82,9 @@ window.addEventListener('scroll', () => {
 (function() {
     // Check if EmailJS is loaded
     if (typeof emailjs !== 'undefined') {
-        emailjs.init("kANtZWZpbdYWEq7XX");
+        // Use configuration from config.js or environment variables
+        const userId = window.EMAILJS_CONFIG?.USER_ID || "kANtZWZpbdYWEq7XX";
+        emailjs.init(userId);
         console.log('EmailJS initialized successfully');
     } else {
         console.error('EmailJS not loaded!');
@@ -141,7 +143,10 @@ if (contactForm) {
             return;
         }
         
-        emailjs.send('service_n4275ej', 'template_55j7lwh', templateParams)
+        // Use configuration from config.js or environment variables
+        const serviceId = window.EMAILJS_CONFIG?.SERVICE_ID || 'service_n4275ej';
+        const templateId = window.EMAILJS_CONFIG?.TEMPLATE_ID || 'template_55j7lwh';
+        emailjs.send(serviceId, templateId, templateParams)
             .then(function(response) {
                 console.log('Email sent successfully:', response);
                 alert('Thank you for your message! I will get back to you soon.');

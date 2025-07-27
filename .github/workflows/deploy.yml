@@ -1,0 +1,39 @@
+name: Deploy Portfolio
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    
+    - name: Replace config with environment variables
+      run: |
+        cat > config.js << EOF
+        // Configuration file for API keys
+        // This file is generated from environment variables during deployment
+        window.EMAILJS_CONFIG = {
+            USER_ID: '${{ secrets.EMAILJS_USER_ID }}',
+            SERVICE_ID: '${{ secrets.EMAILJS_SERVICE_ID }}',
+            TEMPLATE_ID: '${{ secrets.EMAILJS_TEMPLATE_ID }}'
+        };
+        EOF
+    
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: .
+        publish_branch: gh-pages 
