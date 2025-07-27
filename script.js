@@ -82,8 +82,12 @@ window.addEventListener('scroll', () => {
 (function() {
     // Check if EmailJS is loaded
     if (typeof emailjs !== 'undefined') {
-        // Use configuration from config.js or environment variables
-        const userId = window.EMAILJS_CONFIG?.USER_ID || "kANtZWZpbdYWEq7XX";
+        // Use configuration from config.js (environment variables)
+        const userId = window.EMAILJS_CONFIG?.USER_ID;
+        if (!userId) {
+            console.error('EmailJS User ID not found in configuration');
+            return;
+        }
         emailjs.init(userId);
         console.log('EmailJS initialized successfully');
     } else {
@@ -143,9 +147,17 @@ if (contactForm) {
             return;
         }
         
-        // Use configuration from config.js or environment variables
-        const serviceId = window.EMAILJS_CONFIG?.SERVICE_ID || 'service_n4275ej';
-        const templateId = window.EMAILJS_CONFIG?.TEMPLATE_ID || 'template_55j7lwh';
+        // Use configuration from config.js (environment variables)
+        const serviceId = window.EMAILJS_CONFIG?.SERVICE_ID;
+        const templateId = window.EMAILJS_CONFIG?.TEMPLATE_ID;
+        
+        if (!serviceId || !templateId) {
+            alert('Email configuration not found. Please check environment variables.');
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+            return;
+        }
+        
         emailjs.send(serviceId, templateId, templateParams)
             .then(function(response) {
                 console.log('Email sent successfully:', response);
